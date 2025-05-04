@@ -1,0 +1,2 @@
+# QaTest
+Sql projects
