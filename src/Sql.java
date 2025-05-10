@@ -18,11 +18,12 @@ public class Sql {
             e.printStackTrace();
         }
 
-        InsertA();
-        UpdateA();
-        DeleteA(); // додали виклик
+       // InsertA();
+        //UpdateA();
+        //DeleteA(); // додали виклик
        // FindUser("Ivan");
         JoinSql();
+        ShowAvg();
     }
 
     public static void InsertA() {
@@ -127,5 +128,32 @@ public class Sql {
             e.printStackTrace();
         }
     }
+
+    public static void ShowAvg() {
+        String Sql = "SELECT student_id, AVG(grade) AS avg FROM grades GROUP BY student_id";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement stmp = conn.prepareStatement(Sql);
+            ResultSet rs = stmp.executeQuery();
+
+            while (rs.next()) {
+                int studentId = rs.getInt("student_id");
+                double avgGrade = rs.getDouble("avg"); // треба зберегти в змінну
+                System.out.println("Student ID: " + studentId + ", Average Grade: " + avgGrade);
+            }
+
+            rs.close();     // Закриваємо ResultSet
+            stmp.close();   // Закриваємо PreparedStatement
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+
+
+
+
 
